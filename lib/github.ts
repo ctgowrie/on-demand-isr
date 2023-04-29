@@ -47,6 +47,9 @@ function createGitHubRequest(path: string, token: string, opts: any = {}) {
       'Content-Type': 'application/json',
       Accept: 'application/vnd.github.v3+json',
     },
+    next: {
+      tags: ['github'],
+    }
   });
 }
 
