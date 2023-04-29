@@ -1,18 +1,20 @@
+import { NextRequest, unstable_revalidatePath } from "next/server";
 import { createHmac } from 'crypto';
 
-export default async function handleWebhook(req, res) {
+export const revalidate = 0;
+
+export async function POST(req: NextRequest) {
   // verify the webhook signature request against the
   // unmodified, unparsed body
-  const body = await getRawBody(req);
+  const body = await req.text();
   if (!body) {
-    res.status(400).send('Bad request (no body)');
-    return;
+    return new Response('No body', { status: 400 });
   }
 
-  const jsonBody = JSON.parse(body);
+  const jsonBody = await req.json();
 
   // compute our signature from the raw body
-  const secret = process.env.GITHUB_WEBHOOK_SECRET;
+  const secret = process.env.GITHUB_WEBHOOK_SECRET || '';
   const signature = req.headers['x-hub-signature-256'];
   const computedSignature =
     'sha256=' + createHmac('sha256', secret).update(body).digest('hex');
@@ -33,31 +35,14 @@ export default async function handleWebhook(req, res) {
     // issue opened or edited
     // comment created or edited
     console.log('[Next.js] Revalidating /');
-    await res.revalidate('/');
+    unstable_revalidatePath('/');
     if (issueNumber) {
       console.log(`[Next.js] Revalidating /${issueNumber}`);
-      await res.revalidate(`/${issueNumber}`);
+      unstable_revalidatePath(`/${issueNumber}`);
     }
 
-    return res.status(200).send('Success!');
+    return new Response('OK');
   } else {
-    return res.status(403).send('Forbidden');
+    return new Response('Forbidden', { status: 403 });
   }
 }
-
-function getRawBody(req) {
-  return new Promise((resolve, reject) => {
-    let bodyChunks = [];
-    req.on('end', () => {
-      const rawBody = Buffer.concat(bodyChunks).toString('utf8');
-      resolve(rawBody);
-    });
-    req.on('data', (chunk) => bodyChunks.push(chunk));
-  });
-}
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};

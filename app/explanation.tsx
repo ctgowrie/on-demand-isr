@@ -7,7 +7,7 @@ export default function Explanation() {
         This app demonstrates the new <b>*On-Demand ISR support*</b> in Next.js
         12.1 (
         <a
-          href="https://github.com/leerob/on-demand-isr"
+          href="https://github.com/ctgowrie/on-demand-isr"
           target="_blank"
           rel="noreferrer"
         >
@@ -23,7 +23,7 @@ export default function Explanation() {
         <p>
           When issues on the `
           <a
-            href="https://github.com/leerob/on-demand-isr"
+            href="https://github.com/ctgowrie/on-demand-isr"
             target="_blank"
             rel="noreferrer"
           >
@@ -67,7 +67,7 @@ export default function Explanation() {
         <em>
           _💡 Try{' '}
           <a
-            href="https://github.com/leerob/on-demand-isr/issues/new"
+            href="https://github.com/ctgowrie/on-demand-isr/issues/new"
             target="_blank"
             rel="noreferrer"
           >
