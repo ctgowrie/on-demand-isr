@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     return new Response('No body', { status: 400 });
   }
 
-  const jsonBody = await req.json();
+  const jsonBody = JSON.parse(body);
 
   // compute our signature from the raw body
   const secret = process.env.GITHUB_WEBHOOK_SECRET || '';
