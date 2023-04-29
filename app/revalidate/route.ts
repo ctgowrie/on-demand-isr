@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     return new Response('OK');
   } else {
     const bodyLog = body.length > 36 ? body.substring(0, 36) + '...' : body;
-    console.log('Invalid signature ', computedSignature, ' ', bodyLog)
+    console.log('Invalid signature ', signature, '!=', computedSignature, ' ', bodyLog)
     return new Response('Forbidden', { status: 403 });
   }
 }
