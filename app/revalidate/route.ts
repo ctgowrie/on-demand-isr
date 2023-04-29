@@ -43,6 +43,7 @@ export async function POST(req: NextRequest) {
 
     return new Response('OK');
   } else {
+    console.log('Invalid signature ', computedSignature, ' ', body)
     return new Response('Forbidden', { status: 403 });
   }
 }
