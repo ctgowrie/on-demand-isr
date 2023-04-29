@@ -1,7 +1,5 @@
-import { NextRequest, unstable_revalidatePath } from "next/server";
+import { NextRequest, unstable_revalidatePath, unstable_revalidateTag } from "next/server";
 import { createHmac } from 'crypto';
-
-export const revalidate = 0;
 
 export async function POST(req: NextRequest) {
   // verify the webhook signature request against the
@@ -32,13 +30,21 @@ export async function POST(req: NextRequest) {
 
     const issueNumber = jsonBody.issue?.number;
 
-    // issue opened or edited
-    // comment created or edited
-    console.log('[Next.js] Revalidating /');
-    unstable_revalidatePath('/');
-    if (issueNumber) {
-      console.log(`[Next.js] Revalidating /${issueNumber}`);
-      unstable_revalidatePath(`/${issueNumber}`);
+
+    const url = new URL(req.url)
+    const useTag = url.searchParams.get('useTag');
+    if (useTag) {
+      console.log('[Next.js] Revalidating github by tag');
+      unstable_revalidateTag('github');
+    } else {
+      // issue opened or edited
+      // comment created or edited
+      console.log('[Next.js] Revalidating /');
+      unstable_revalidatePath('/');
+      if (issueNumber) {
+        console.log(`[Next.js] Revalidating /${issueNumber}`);
+        unstable_revalidatePath(`/${issueNumber}`);
+      }
     }
 
     return new Response('OK');
