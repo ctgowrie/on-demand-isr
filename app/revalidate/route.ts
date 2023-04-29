@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
   // compute our signature from the raw body
   const secret = process.env.GITHUB_WEBHOOK_SECRET || '';
-  const signature = req.headers['x-hub-signature-256'];
+  const signature = req.headers.get('x-hub-signature-256') || req.headers.get('X-Hub-Signature-256') || '';
   const computedSignature =
     'sha256=' + createHmac('sha256', secret).update(body).digest('hex');
 
