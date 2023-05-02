@@ -1,4 +1,5 @@
-import { NextRequest, unstable_revalidatePath, unstable_revalidateTag } from "next/server";
+import { NextRequest } from "next/server";
+import { unstable_revalidatePath, unstable_revalidateTag } from "next/cache";
 import { createHmac } from 'crypto';
 
 export async function POST(req: NextRequest) {
