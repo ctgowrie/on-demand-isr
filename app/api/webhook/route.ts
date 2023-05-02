@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
 
     const url = new URL(req.url)
     const useTag = url.searchParams.get('useTag');
-    if (useTag) {
+    if (true) {
       console.log('[Next.js] Revalidating github by tag');
       unstable_revalidateTag('github');
     } else {
