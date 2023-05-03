@@ -11,7 +11,7 @@
     "javascript-time-ago": "^2.5.9",
     "jsonwebtoken": "^9.0.0",
     "marked": "^4.2.12",
-    "next": "https://files-2tu1xyk3p-vtest314-ijjk-testing.vercel.app/next-v13.3.5-canary.2.tgz",
+    "next": "13.3.5-canary.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sass": "^1.58.3",

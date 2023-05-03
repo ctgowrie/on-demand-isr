@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
 
     const url = new URL(req.url)
     const useTag = url.searchParams.get('useTag');
-    if (true) {
+    if (useTag) {
       console.log('[Next.js] Revalidating github by tag');
       unstable_revalidateTag('github');
     } else {
@@ -42,10 +42,6 @@ export async function POST(req: NextRequest) {
       // comment created or edited
       console.log('[Next.js] Revalidating /');
       unstable_revalidatePath('/');
-      if (issueNumber) {
-        console.log(`[Next.js] Revalidating /${issueNumber}`);
-        unstable_revalidatePath(`/${issueNumber}`);
-      }
     }
 
     return new Response('OK');
